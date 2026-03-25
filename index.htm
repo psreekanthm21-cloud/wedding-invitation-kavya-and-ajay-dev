@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ajay Dev & Kavya</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f6f7f5;
+}
+
+/* ===== ENVELOPE ===== */
+.envelope {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg,#e8e6df,#f5f3ec);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.envelope-box {
+  width: 280px;
+  height: 190px;
+  background: white;
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* ✅ FIXED TAP TEXT POSITION */
+.tap-text {
+  position: absolute;
+  width: 100%;
+  bottom: 25px;  /* 🔥 FIX */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  font-weight:bold;
+  color:#556b2f;
+  z-index:2;
+}
+
+.flap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #556b2f;
+  clip-path: polygon(0 0,100% 0,50% 60%);
+  transform-origin: top;
+  transition: 0.8s;
+}
+
+.envelope.open .flap { transform: rotateX(180deg); }
+
+.envelope.hide {
+  opacity: 0;
+  pointer-events: none;
+  transition: 1s;
+}
+
+/* ===== HERO ===== */
+.hero {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  animation: slideShow 15s infinite;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #0f1f2f;
+  filter: brightness(0.7);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(10,25,40,0.6);
+}
+
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  color: white;
+  z-index: 2;
+}
+
+.hero-text h1 {
+  font-family: 'Playfair Display';
+  font-size: 36px;
+}
+
+/* ===== SLIDES ===== */
+.slide:nth-child(1){animation-delay:0s;}
+.slide:nth-child(2){animation-delay:5s;}
+.slide:nth-child(3){animation-delay:10s;}
+
+@keyframes slideShow {
+  0%{opacity:0;}
+  5%{opacity:1;}
+  30%{opacity:1;}
+  35%{opacity:0;}
+  100%{opacity:0;}
+}
+
+/* ===== HEART ===== */
+.heart {
+  position: absolute;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  0%{transform:translateY(100vh);opacity:0;}
+  30%{opacity:1;}
+  100%{transform:translateY(-10vh);opacity:0;}
+}
+
+/* ===== SECTION ===== */
+.section {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.title {
+  font-family: 'Playfair Display';
+  color: #556b2f;
+}
+
+/* ===== COUNTDOWN ===== */
+.count-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.count-box {
+  border: 2px solid #c9a227;
+  border-radius: 15px;
+  padding: 20px;
+  width: 80px;
+  background: #fffaf0;
+}
+
+.count-box h2 { margin: 0; color:#c9a227; }
+.count-box p { margin:5px 0 0; color:#556b2f; }
+
+/* ===== CARD ===== */
+.card {
+  border: 1px solid #556b2f;
+  padding: 25px;
+  border-radius: 20px;
+}
+
+.date-box {
+  border: 2px solid #c9a227;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+/* ===== BUTTON ===== */
+.btn {
+  display:inline-block;
+  margin-top:15px;
+  background:#556b2f;
+  color:white;
+  padding:12px 25px;
+  border-radius:25px;
+  text-decoration:none;
+}
+
+/* ===== THANK YOU ===== */
+.thankyou {
+  height: 100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position: relative;
+}
+
+.thankyou::before {
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:url('thankyou.jpg') center/cover no-repeat;
+  filter: blur(3px) brightness(0.8);
+}
+
+.thankyou-box {
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.15);
+  padding: 30px;
+  border-radius: 20px;
+  color:#fff;
+  text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ENVELOPE -->
+<div class="envelope" id="envelope">
+  <div class="envelope-box" onclick="openEnvelope()">
+    <div class="tap-text">Tap to Open 💌</div>
+    <div class="flap"></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+
+<div class="slide"><img src="photo1.jpg"></div>
+<div class="slide"><img src="photo2.jpg"></div>
+<div class="slide"><img src="photo3.jpg"></div>
+
+<div class="hero-text">
+  <h1>Ajay Dev ❤️ Kavya</h1>
+  <p>We're getting married</p>
+  <p><b>26 April 2026</b></p>
+</div>
+
+<div class="heart" style="left:10%">💖</div>
+<div class="heart" style="left:50%;animation-delay:2s">💖</div>
+<div class="heart" style="left:80%;animation-delay:4s">💖</div>
+
+</div>
+
+<!-- INVITATION -->
+<div class="section">
+<h2 class="title">Invitation</h2>
+
+<h3 class="title">Let's Count Together ⏳</h3>
+
+<div class="count-container">
+<div class="count-box"><h2 id="d"></h2><p>DAYS</p></div>
+<div class="count-box"><h2 id="h"></h2><p>HOURS</p></div>
+<div class="count-box"><h2 id="m"></h2><p>MINUTES</p></div>
+<div class="count-box"><h2 id="s"></h2><p>SECONDS</p></div>
+</div>
+
+</div>
+
+<!-- CEREMONY -->
+<div class="section">
+<div class="card">
+
+<h2 class="title">Wedding Ceremony</h2>
+<p>Our Forever Begins On</p>
+
+<div class="date-box"><b>26 April 2026</b></div>
+
+<p>Event Time :</p>
+<p><b>10:30 AM</b></p>
+
+<p>Location :</p>
+<p><b>PM Auditorium Kottakkal</b></p>
+
+<a class="btn" href="https://www.google.com/maps/search/PM+Auditorium+Kottakkal" target="_blank">Get Location</a>
+
+<hr>
+
+<p>ഞങ്ങൾ വിവാഹിതരാകുന്നു</p>
+<p><b>26 ഏപ്രിൽ 2026</b></p>
+
+<p>സമയം :</p>
+<p><b>രാവിലെ 10:30</b></p>
+
+<p>സ്ഥലം :</p>
+<p><b>പി.എം ഓഡിറ്റോറിയം കോട്ടക്കൽ</b></p>
+
+</div>
+</div>
+
+<!-- THANK YOU -->
+<div class="thankyou">
+<div class="thankyou-box">
+<h2>Thank You</h2>
+<p>Your love and blessings make our day even more special</p>
+</div>
+</div>
+
+<script>
+
+function openEnvelope(){
+let env=document.getElementById("envelope");
+env.classList.add("open");
+setTimeout(()=>{env.classList.add("hide");},1000);
+}
+
+var countDate=new Date("April 26, 2026 10:30:00").getTime();
+
+setInterval(function(){
+var now=new Date().getTime();
+var distance=countDate-now;
+
+document.getElementById("d").innerHTML=Math.floor(distance/(1000*60*60*24));
+document.getElementById("h").innerHTML=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+document.getElementById("m").innerHTML=Math.floor((distance%(1000*60*60))/(1000*60));
+document.getElementById("s").innerHTML=Math.floor((distance%(1000*60))/1000);
+},1000);
+
+</script>
+
+</body>
+</html>
